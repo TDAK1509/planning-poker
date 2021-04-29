@@ -8,6 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   socket.emit("join", username);
+  socket.on("roomUsers", users => {
+    console.log("Users:", users);
+  });
 });
 
 function getUsername() {

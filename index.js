@@ -5,6 +5,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+const { users, addUser, removeUser } = require("./server/users");
+
 app.use(express.static("src"));
 
 app.get("/", (req, res) => {
@@ -17,7 +19,8 @@ app.get("/room", (req, res) => {
 
 io.on("connection", socket => {
   socket.on("join", username => {
-    console.log(`${username} has joined.`);
+    addUser(username);
+    io.emit("roomUsers", users);
   });
 });
 
