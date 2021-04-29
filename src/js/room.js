@@ -26,11 +26,17 @@ function _setUpSeats(users) {
     const bet = user.bet || "?";
     const name = user.name;
     const li = document.createElement("li");
-    li.innerHTML = `<div>${bet}</div><p>${name}</p>`;
+    li.innerHTML = `<div class="hiding">${bet}</div><p>${name}</p>`;
     table.appendChild(li);
   });
 }
 
 function bet(value) {
   socket.emit("bet", value);
+}
+
+function showCards() {
+  document.querySelectorAll(".hiding").forEach(el => {
+    el.classList.remove("hiding");
+  });
 }

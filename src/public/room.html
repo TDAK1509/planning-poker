@@ -5,13 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Poker Table</title>
+
+    <link rel="stylesheet" href="/css/room.css" type="text/css" />
   </head>
   <body>
     <ul id="table"></ul>
 
-    <button onclick="bet(1);">1</button>
-    <button onclick="bet(2);">2</button>
-    <button onclick="bet(3);">3</button>
+    <button onclick="showCards()">SHOW CARDS</button>
+
+    <button onclick="bet(1)">1</button>
+    <button onclick="bet(2)">2</button>
+    <button onclick="bet(3)">3</button>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/room.js"></script>
