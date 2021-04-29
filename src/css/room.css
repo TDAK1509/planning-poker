@@ -29,11 +29,12 @@ h1 {
   margin: auto;
   margin-top: 2em;
   margin-bottom: 1em;
+  color: var(--clr-primary);
 }
 
 #table {
   position: relative;
-  border: 3px solid #000;
+  border: 3px solid chocolate;
   border-radius: 100vh;
   height: var(--table-height);
   width: var(--table-width);
@@ -46,7 +47,7 @@ h1 {
 }
 
 .card {
-  border: 2px solid blue;
+  border: 2px solid var(--clr-primary);
   border-radius: 8px;
   width: var(--card-width);
   height: var(--card-height);
@@ -72,17 +73,17 @@ h1 {
 }
 
 #table li:nth-child(4) {
-  top: calc((var(--card-height) * 1.3) * -1);
+  top: calc((var(--card-height) * 1.4) * -1);
   left: calc((var(--table-width)) / 4 - (var(--card-width) / 2));
 }
 
 #table li:nth-child(5) {
-  top: calc((var(--card-height) * 1.3) * -1);
+  top: calc((var(--card-height) * 1.4) * -1);
   left: calc((var(--table-width) / 2) - (var(--card-width) / 2));
 }
 
 #table li:nth-child(6) {
-  top: calc((var(--card-height) * 1.3) * -1);
+  top: calc((var(--card-height) * 1.4) * -1);
   right: calc((var(--table-width)) / 4 - (var(--card-width) / 2));
 }
 
