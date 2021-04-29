@@ -11,6 +11,10 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/src/public/index.html");
 });
 
+app.get("/room", (req, res) => {
+  res.sendFile(__dirname + "/src/public/room.html");
+});
+
 io.on("connection", socket => {
   socket.on("join", username => {
     console.log(`${username} has joined.`);
