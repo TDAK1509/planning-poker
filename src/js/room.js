@@ -1,7 +1,7 @@
 const socket = io();
 
 document.addEventListener("DOMContentLoaded", () => {
-  const username = getUsername();
+  const username = _getUsername();
 
   if (!username) {
     window.location.href = window.location.origin;
@@ -13,7 +13,11 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-function getUsername() {
+function _getUsername() {
   const pageUrl = new URL(window.location.href);
   return pageUrl.searchParams.get("user") || "";
+}
+
+function bet(value) {
+  socket.emit("bet", value);
 }

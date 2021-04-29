@@ -16,8 +16,13 @@ function removeUser(id) {
   }
 }
 
+function bet(id, value) {
+  users.find(u => u.id === id).bet = value;
+}
+
 module.exports = {
   users,
   addUser,
   removeUser,
+  bet,
 };

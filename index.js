@@ -5,7 +5,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-const { users, addUser, removeUser } = require("./server/users");
+const { users, addUser, removeUser, bet } = require("./server/users");
 
 app.use(express.static("src"));
 
@@ -25,6 +25,11 @@ io.on("connection", socket => {
 
   socket.on("disconnect", () => {
     removeUser(socket.id);
+    io.emit("roomUsers", users);
+  });
+
+  socket.on("bet", value => {
+    bet(socket.id, value);
     io.emit("roomUsers", users);
   });
 });
