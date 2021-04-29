@@ -1,8 +1,8 @@
 const users = [];
 
-function addUser(username) {
+function addUser(id, username) {
   const user = {
-    id: users.length,
+    id: id,
     name: username,
   };
   users.push(user);

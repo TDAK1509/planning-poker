@@ -19,7 +19,12 @@ app.get("/room", (req, res) => {
 
 io.on("connection", socket => {
   socket.on("join", username => {
-    addUser(username);
+    addUser(socket.id, username);
+    io.emit("roomUsers", users);
+  });
+
+  socket.on("disconnect", () => {
+    removeUser(socket.id);
     io.emit("roomUsers", users);
   });
 });
