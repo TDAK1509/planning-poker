@@ -16,6 +16,12 @@ function removeUser(id) {
   }
 }
 
+function resetBet() {
+  users.forEach(u => {
+    u.bet = "";
+  });
+}
+
 function bet(id, value) {
   users.find(u => u.id === id).bet = value;
 }
@@ -24,5 +30,6 @@ module.exports = {
   users,
   addUser,
   removeUser,
+  resetBet,
   bet,
 };

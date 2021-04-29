@@ -5,7 +5,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-const { users, addUser, removeUser, bet } = require("./server/users");
+const { users, addUser, removeUser, bet, resetBet } = require("./server/users");
 
 app.use(express.static("src"));
 
@@ -30,6 +30,11 @@ io.on("connection", socket => {
 
   socket.on("bet", value => {
     bet(socket.id, value);
+    io.emit("refreshRoom", users);
+  });
+
+  socket.on("clear", () => {
+    resetBet();
     io.emit("refreshRoom", users);
   });
 });
