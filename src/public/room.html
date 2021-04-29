@@ -9,14 +9,18 @@
     <link rel="stylesheet" href="/css/room.css" type="text/css" />
   </head>
   <body>
-    <ul id="table"></ul>
+    <main>
+      <h1>PLAY MORE, WORK LESS</h1>
 
-    <button onclick="showCards()">SHOW CARDS</button>
-    <button onclick="resetCards()">CLEAR</button>
+      <ul id="table"></ul>
 
-    <button onclick="bet(1)">1</button>
-    <button onclick="bet(2)">2</button>
-    <button onclick="bet(3)">3</button>
+      <button onclick="showCards()">SHOW CARDS</button>
+      <button onclick="resetCards()">CLEAR</button>
+
+      <button onclick="bet(1)">1</button>
+      <button onclick="bet(2)">2</button>
+      <button onclick="bet(3)">3</button>
+    </main>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/room.js"></script>
