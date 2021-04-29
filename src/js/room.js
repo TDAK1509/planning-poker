@@ -51,7 +51,7 @@ function _showCards(users) {
     const bet = user.bet || "😂";
     const name = user.name;
     const li = document.createElement("li");
-    li.innerHTML = `<div class="card">${bet}</div><p>${name}</p>`;
+    li.innerHTML = `<div class="card card--show"><span>${bet}</span></div><p>${name}</p>`;
     table.appendChild(li);
   });
 }

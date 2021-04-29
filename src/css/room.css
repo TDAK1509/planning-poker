@@ -61,6 +61,35 @@ h1 {
   background: var(--clr-primary);
 }
 
+.card--show {
+  animation: flip 0.3s linear;
+}
+
+.card--show span {
+  animation: fadeIn 0.2s linear;
+}
+
+@keyframes flip {
+  0% {
+    background: var(--clr-primary);
+    transform: rotateY(180deg);
+  }
+
+  100% {
+    transform: rotateY(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 #table li:nth-child(1) {
   bottom: calc((var(--card-height) * 1.5) * -1);
   left: calc((var(--table-width)) / 4 - (var(--card-width) / 2));
