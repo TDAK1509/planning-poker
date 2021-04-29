@@ -12,10 +12,10 @@
     <main>
       <h1>PLAY MORE, WORK LESS</h1>
 
-      <ul id="table"></ul>
-
-      <button onclick="showCards()">SHOW CARDS</button>
-      <button onclick="resetCards()">CLEAR</button>
+      <div id="action-buttons">
+        <button onclick="resetCards()">CLEAR</button>
+        <button onclick="showCards()">SHOW CARDS</button>
+      </div>
 
       <div id="bet-buttons">
         <button onclick="bet(1)">1</button>
@@ -27,6 +27,8 @@
         <button onclick="bet(21)">21</button>
         <button onclick="bet(39)">39</button>
       </div>
+
+      <ul id="table"></ul>
     </main>
 
     <script src="/socket.io/socket.io.js"></script>

@@ -23,6 +23,7 @@ ul li {
 
 main {
   text-align: center;
+  position: relative;
 }
 
 h1 {
@@ -33,13 +34,15 @@ h1 {
 }
 
 #table {
-  position: relative;
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  transform: translateX(-50%);
   border: 3px solid chocolate;
   border-radius: 100vh;
   height: var(--table-height);
   width: var(--table-width);
   margin: auto;
-  margin-top: 150px;
 }
 
 #table li {
@@ -103,10 +106,10 @@ h1 {
 }
 
 #bet-buttons {
-  margin-top: 100px;
+  margin-top: 200px;
 }
 
-#bet-buttons button {
+button {
   font-size: 1rem;
   padding: 1em 1em;
   background: var(--clr-primary);
@@ -117,11 +120,25 @@ h1 {
   transition: 0.15s ease-in-out;
 }
 
-#bet-buttons button:hover {
+button:hover {
   color: var(--clr-primary);
   background: var(--clr-primary-invert);
 }
 
 #bet-buttons button:not(:first-child) {
   margin-left: 10px;
+}
+
+#action-buttons {
+  margin-top: 200px;
+  position: relative;
+  z-index: 1;
+}
+
+#action-buttons button {
+  padding: 0.55em 1.5em;
+}
+
+#action-buttons button:not(:first-child) {
+  margin-left: 50px;
 }
