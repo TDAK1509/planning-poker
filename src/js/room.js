@@ -28,8 +28,9 @@ function _setUpSeats(users) {
   table.innerHTML = "";
 
   users.forEach(user => {
+    const cardClass = user.bet ? "card card--selected" : "card";
     const li = document.createElement("li");
-    li.innerHTML = `<div class="card hiding"></div><p>${user.name}</p>`;
+    li.innerHTML = `<div class="${cardClass}"></div><p>${user.name}</p>`;
     table.appendChild(li);
   });
 }
