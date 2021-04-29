@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   socket.emit("join", username);
-  socket.on("roomUsers", users => {
+  socket.on("refreshRoom", users => {
     console.log("Users:", users);
   });
 });
