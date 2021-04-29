@@ -8,8 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   socket.emit("join", username);
+
   socket.on("refreshRoom", users => {
     _setUpSeats(users);
+  });
+
+  socket.on("showCards", users => {
+    _showCards(users);
   });
 });
 
@@ -23,10 +28,8 @@ function _setUpSeats(users) {
   table.innerHTML = "";
 
   users.forEach(user => {
-    const bet = user.bet || "?";
-    const name = user.name;
     const li = document.createElement("li");
-    li.innerHTML = `<div class="card hiding">${bet}</div><p>${name}</p>`;
+    li.innerHTML = `<div class="card hiding"></div><p>${user.name}</p>`;
     table.appendChild(li);
   });
 }
@@ -36,14 +39,22 @@ function bet(value) {
 }
 
 function showCards() {
-  document.querySelectorAll(".card").forEach(el => {
-    el.classList.remove("hiding");
+  socket.emit("showCards");
+}
+
+function _showCards(users) {
+  const table = document.getElementById("table");
+  table.innerHTML = "";
+
+  users.forEach(user => {
+    const bet = user.bet || "😂";
+    const name = user.name;
+    const li = document.createElement("li");
+    li.innerHTML = `<div class="card">${bet}</div><p>${name}</p>`;
+    table.appendChild(li);
   });
 }
 
 function resetCards() {
-  document.querySelectorAll(".card").forEach(el => {
-    el.classList.add("hiding");
-  });
   socket.emit("clear");
 }

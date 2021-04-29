@@ -33,6 +33,10 @@ io.on("connection", socket => {
     io.emit("refreshRoom", users);
   });
 
+  socket.on("showCards", () => {
+    io.emit("showCards", users);
+  });
+
   socket.on("clear", () => {
     resetBet();
     io.emit("refreshRoom", users);
