@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = window.location.origin;
   }
 
+  _initUsergramServiceId(username);
+
   socket.emit("join", username);
 
   socket.on("refreshRoom", users => {
@@ -23,6 +25,10 @@ function _getUsername() {
   return pageUrl.searchParams.get("user") || "";
 }
 
+function _initUsergramServiceId(serviceId) {
+  ugattr["serviceId"] = serviceId;
+}
+
 function _setUpSeats(users) {
   const table = document.getElementById("table");
   table.innerHTML = "";
@@ -37,10 +43,20 @@ function _setUpSeats(users) {
 
 function bet(value) {
   socket.emit("bet", value);
+  _sendBetEventToUsergram();
+}
+
+function _sendBetEventToUsergram() {
+  usergram.push(["send", "Ugo97x-1", "event", "poker_bet", ugattr]);
 }
 
 function showCards() {
   socket.emit("showCards");
+  _sendConversionToUsergram();
+}
+
+function _sendConversionToUsergram() {
+  usergram.push(["send", "Ugo97x-1", "cv", "poker", ugattr]);
 }
 
 function _showCards(users) {
@@ -58,4 +74,9 @@ function _showCards(users) {
 
 function resetCards() {
   socket.emit("clear");
+  _sendResetEventToUsergram();
+}
+
+function _sendResetEventToUsergram() {
+  usergram.push(["send", "Ugo97x-1", "event", "poker_reset", ugattr]);
 }
