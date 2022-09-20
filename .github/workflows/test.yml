@@ -1,0 +1,27 @@
+name: Build & sync to S3 (dev)
+
+on:
+  workflow_dispatch:
+    inputs:
+      k8s_namespace:
+        type: choice
+        required: true
+        description: "k8s namespace to update"
+        options:
+          - eai-dev-apark
+          - eai-dev-blackjack
+          - eai-dev-client-announcement
+          - eai-dev-design
+          - eai-dev-fixers
+          - eai-dev-kaizen
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy information
+        env:
+          NAMESPACE: ${{ github.event.inputs.k8s_namespace }}
+        run: |
+          echo "- Dev environment: $NAMESPACE"
+          echo "- Branch: ${GITHUB_REF#refs/heads/}"
