@@ -25,11 +25,11 @@ jobs:
       - name: Get workflow conclusion
         uses: technote-space/workflow-conclusion-action@v3
 
-      - run: env.WORKFLOW_CONCLUSION
+      - run: echo ${{ env.WORKFLOW_CONCLUSION }}
 
       - name: Set final commit status
         uses: myrotvorets/set-commit-status-action@master
         with:
           sha: $BRANCH
           token: ${{ secrets.GITHUB_TOKEN }}
-          status: env.WORKFLOW_CONCLUSION
+          status: ${{ env.WORKFLOW_CONCLUSION }}
