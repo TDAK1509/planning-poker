@@ -20,6 +20,8 @@ jobs:
           echo "Branch: $BRANCH"
           echo "Branch sha: $BRANCH_SHA"
 
+      - run: echo "another integraion test update"
+
   report:
     needs: [test]
     runs-on: ubuntu-20.04
