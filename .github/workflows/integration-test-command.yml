@@ -30,6 +30,6 @@ jobs:
       - name: Set final commit status
         uses: myrotvorets/set-commit-status-action@master
         with:
-          sha: $BRANCH
+          sha: ${{ BRANCH }}
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ env.WORKFLOW_CONCLUSION }}
