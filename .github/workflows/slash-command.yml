@@ -26,5 +26,6 @@ jobs:
             integration-test
           static-args: |
             branch=${{ steps.comment-branch.outputs.head_ref }}
+            branch-sha=${{ steps.comment-branch.outputs.head_sha }}
             pr-number=${{ steps.extract_pr_number.outputs.pr_number }}
             comment-id=${{ github.event.comment.id }}
