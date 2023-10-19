@@ -1,5 +1,5 @@
 name: Integration test
-run-name: "Testing PR #${{ github.event.inputs.pr-number }}"
+run-name: "Testing PR #${{ github.event.client_payload.slash_command.args.named.pr-number }}"
 
 on:
   repository_dispatch:
