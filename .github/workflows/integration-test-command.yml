@@ -7,6 +7,7 @@ on:
 
 env:
   BRANCH: ${{ github.event.client_payload.slash_command.args.named.branch }}
+  BRANCH_SHA: ${{ github.event.client_payload.slash_command.args.named.branch-sha }}
 
 jobs:
   test:
@@ -17,6 +18,7 @@ jobs:
           echo "PR number: ${{ github.event.client_payload.slash_command.args.named.pr-number }}"
           echo "Comment id: ${{ github.event.client_payload.slash_command.args.named.comment-id }}"
           echo "Branch: $BRANCH"
+          echo "Branch sha: $BRANCH_SHA"
 
   report:
     needs: [test]
@@ -30,6 +32,6 @@ jobs:
       - name: Set final commit status
         uses: myrotvorets/set-commit-status-action@master
         with:
-          sha: ${{ env.BRANCH }}
+          sha: ${{ env.BRANCH_SHA }}
           token: ${{ secrets.GITHUB_TOKEN }}
           status: ${{ env.WORKFLOW_CONCLUSION }}
