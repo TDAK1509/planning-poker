@@ -1,0 +1,19 @@
+name: Integration test
+run-name: "Testing PR #${{ github.event.inputs.pr-number }}"
+
+on:
+  repository_dispatch:
+    types: [integration-test-command]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    container:
+      image: cypress/browsers:node-16.18.1-chrome-110.0.5481.96-1-ff-109.0-edge-110.0.1587.41-1
+      options: --user 1001
+    steps:
+      - name: Output command and arguments
+        run: |
+          echo ${{ github.event.client_payload.slash_command.args.named.pr-number }}
+          echo ${{ github.event.client_payload.slash_command.args.named.comment-id }}
+      - run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"

@@ -1,0 +1,19 @@
+name: Handle slash commands
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  handle_slash_command:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: peter-evans/slash-command-dispatch@v3
+        with:
+          token: ${{ secrets.BEBIT_MACHINE_GITHUB_TOKEN }}
+          issue-type: pull-request
+          commands: |
+            integration-test
+          static-args: |
+            pr-number=${{ github.event.number }}
+            comment-id=${{ github.event.comment.id }}
