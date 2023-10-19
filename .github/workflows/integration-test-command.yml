@@ -5,6 +5,9 @@ on:
   repository_dispatch:
     types: [integration-test-command]
 
+env:
+  BRANCH: ${{ github.event.client_payload.slash_command.args.named.branch }}
+
 jobs:
   test:
     runs-on: ubuntu-20.04
@@ -13,5 +16,18 @@ jobs:
         run: |
           echo "PR number: ${{ github.event.client_payload.slash_command.args.named.pr-number }}"
           echo "Comment id: ${{ github.event.client_payload.slash_command.args.named.comment-id }}"
-          echo "Branch: ${{ github.event.client_payload.slash_command.args.named.branch }}"
-      - run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
+          echo "Branch: $BRANCH"
+
+report:
+  needs: [test]
+  runs-on: ubuntu-20.04
+  steps:
+    - name: Get workflow conclusion
+      uses: technote-space/workflow-conclusion-action@v3
+
+    - name: Set final commit status
+      uses: myrotvorets/set-commit-status-action@master
+      with:
+        sha: $BRANCH
+        token: ${{ secrets.GITHUB_TOKEN }}
+        status: env.WORKFLOW_CONCLUSION
