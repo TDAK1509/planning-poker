@@ -25,6 +25,8 @@ jobs:
       - name: Get workflow conclusion
         uses: technote-space/workflow-conclusion-action@v3
 
+      - run: env.WORKFLOW_CONCLUSION
+
       - name: Set final commit status
         uses: myrotvorets/set-commit-status-action@master
         with:
