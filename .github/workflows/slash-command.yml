@@ -8,6 +8,16 @@ jobs:
   handle_slash_command:
     runs-on: ubuntu-latest
     steps:
+      - name: Getting PR number
+        id: extract_pr_number
+        shell: bash
+        run: |
+          pr_url="${{ github.event.issue.pull_request.url }}"
+          echo "pr_number=${pr_url##*/}" >> $GITHUB_OUTPUT
+
+      - uses: xt0rted/pull-request-comment-branch@v2
+        id: comment-branch
+
       - uses: peter-evans/slash-command-dispatch@v3
         with:
           token: ${{ secrets.BEBIT_MACHINE_GITHUB_TOKEN }}
@@ -15,5 +25,6 @@ jobs:
           commands: |
             integration-test
           static-args: |
-            pr-number=${{ github.event.number }}
+            branch=${{ steps.comment-branch.outputs.head_ref }}
+            pr-number=${{ steps.extract_pr_number.outputs.pr_number }}
             comment-id=${{ github.event.comment.id }}
