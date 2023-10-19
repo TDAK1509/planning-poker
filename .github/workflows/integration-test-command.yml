@@ -13,6 +13,11 @@ jobs:
   test:
     runs-on: ubuntu-20.04
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ env.BRANCH }}
+
       - name: Output command and arguments
         run: |
           echo "PR number: ${{ github.event.client_payload.slash_command.args.named.pr-number }}"
