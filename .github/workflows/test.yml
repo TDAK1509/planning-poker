@@ -8,11 +8,10 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       COMMENT: "/it --record"
-      COMMENT2: "/it"
+      WTF: "/it"
     steps:
       - run: |
           params=(${COMMENT:4})
           echo "${params[@]}"
-
-          params2=(${COMMENT2:4})
-          echo "${params[@]}"
+          params2=(${WTF:4})
+          echo "${params2[@]}"
