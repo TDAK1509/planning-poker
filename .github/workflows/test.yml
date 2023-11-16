@@ -1,0 +1,21 @@
+name: integration-test
+
+on:
+  issue_comment:
+    types: [created]
+
+env:
+  COMMENT: ${{ github.event.comment.body }}
+
+jobs:
+  test:
+    if: ${{ github.event.issue.pull_request && (env.COMMENT == '/it' || env.COMMENT == '/integration-test') }}
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo $COMMENT
+
+  test2:
+    if: ${{ github.event.issue.pull_request && (contains(github.event.comment.body, '/it') || contains(github.event.comment.body, '/integration-test')) }}
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo $COMMENT
