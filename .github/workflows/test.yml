@@ -11,7 +11,9 @@ jobs:
       WTF: "/it"
     steps:
       - run: |
+          # Strip `/it` from PR comment to get params, and convert to array
           params=(${COMMENT:4})
           echo "${params[@]}"
+
           params2=(${WTF:4})
           echo "${params2[@]}"
