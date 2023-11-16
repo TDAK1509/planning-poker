@@ -7,8 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-22.04
     env:
-      COMMENT: "/it --record"
-      WTF: "/it"
+      COMMENT: "/it"
     container:
       image: cypress/browsers:node-16.18.1-chrome-110.0.5481.96-1-ff-109.0-edge-110.0.1587.41-1
       options: --user 1001
@@ -18,7 +17,9 @@ jobs:
         run: |
           # Strip `/it` from PR comment to get params, and convert to array
           params=(${COMMENT:4})
-          echo "${params[@]}"
 
-          params2=(${WTF:4})
-          echo "${params2[@]}"
+          if [[ $COMMENT != *"--record"* ]]; then
+            params+=("--record false")
+          fi
+
+          echo "${params[@]}"
