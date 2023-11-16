@@ -1,0 +1,28 @@
+name: conditional params
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    env:
+      SHOULD_RECORD: ${{ contains(github.event.comment.body, 'record') }}
+    steps:
+      - run: |
+        params=()
+
+        if [[ $SHOULD_RECORD == true ]]; then
+          params+=(--record)
+        fi
+
+        if [[ $SHOULD_RECORD == false ]]; then
+          params+=(--hahaha)
+        fi
+
+        TZ=Asia/Tokyo npx cypress run \
+            --browser chrome \
+            --config-file cypress.config.ci.ts \
+            --parallel \
+            --tag "$ACTOR,integration" \
+            "${params[@]}"
