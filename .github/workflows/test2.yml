@@ -13,16 +13,13 @@ jobs:
           params=()
 
           if [[ $SHOULD_RECORD == true ]]; then
-            params+=(--record)
+            params+=("--record")
           fi
 
           if [[ $SHOULD_RECORD == false ]]; then
-            params+=(--hahaha)
+            params+=("-l")
           fi
 
-          TZ=Asia/Tokyo npx cypress run \
-            --browser chrome \
-            --config-file cypress.config.ci.ts \
-            --parallel \
-            --tag "$ACTOR,integration" \
+          ls \
+            -a \
             "${params[@]}"
