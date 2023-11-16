@@ -9,13 +9,10 @@ env:
 
 jobs:
   test:
-    if: ${{ github.event.issue.pull_request && (github.event.comment.body == '/it' || github.event.comment.body == '/integration-test') }}
-    runs-on: ubuntu-22.04
-    steps:
-      - run: echo $COMMENT
-
-  test2:
     if: ${{ github.event.issue.pull_request && (contains(github.event.comment.body, '/it') || contains(github.event.comment.body, '/integration-test')) }}
     runs-on: ubuntu-22.04
+    env:
+      SHOULD_RECORD: ${{ contains(github.event.comment.body, 'record') }}
     steps:
       - run: echo $COMMENT
+      - run: echo "should record $SHOULD_RECORD"
