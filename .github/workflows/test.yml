@@ -1,18 +1,18 @@
 name: integration-test
 
 on:
-  issue_comment:
-    types: [created]
-
-env:
-  COMMENT: ${{ github.event.comment.body }}
+  push:
 
 jobs:
   test:
-    if: ${{ github.event.issue.pull_request && (contains(github.event.comment.body, '/it') || contains(github.event.comment.body, '/integration-test')) }}
     runs-on: ubuntu-22.04
     env:
-      SHOULD_RECORD: ${{ contains(github.event.comment.body, 'record') }}
+      COMMENT: "/it --record"
+      COMMENT2: "/it"
     steps:
-      - run: echo $COMMENT
-      - run: echo "should record $SHOULD_RECORD"
+      - run: |
+          params=(${COMMENT:4})
+          echo "${params[@]}"
+
+          params2=(${COMMENT2:4})
+          echo "${params[@]}"
