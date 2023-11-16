@@ -13,3 +13,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - run: echo $COMMENT
+
+  test2:
+    if: ${{ github.event.issue.pull_request && (contains(github.event.comment.body, '/it') || contains(github.event.comment.body, '/integration-test')) }}
+    runs-on: ubuntu-22.04
+    steps:
+      - run: echo $COMMENT
