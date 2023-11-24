@@ -1,6 +1,6 @@
 name: Deploy to eai-dev
 run-name: >-
-  ${{ format('Deploy to {0}: {1} {2} {3} {4} {5} {6}', inputs.k8s_namespace, inputs.host && 'host' || '', inputs.settings && 'settings' || '', inputs.journey && 'journey' || '', inputs.search && 'search' || '', inputs.stats && 'stats' || '', inputs.funnel && 'funnel' || '') }}
+  ${{ format('Deploy to {0}: {1} {2} {3} {4} {5} {6}', inputs.k8s_namespace, inputs.host && 'host', inputs.settings && 'settings' || '', inputs.journey && 'journey' || '', inputs.search && 'search' || '', inputs.stats && 'stats' || '', inputs.funnel && 'funnel' || '') }}
 
 on:
   workflow_dispatch:
