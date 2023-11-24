@@ -1,6 +1,6 @@
 name: Deploy to eai-dev
 run-name: >-
-  ${{ format("Deploying {0}, {1}, {2} to ${inputs.k8s_namespace}", 'host', 'settings') }}
+  ${{ echo 'hahaha' }}
 
 on:
   workflow_dispatch:
