@@ -1,5 +1,5 @@
 name: Deploy to eai-dev
-run-name: |
+run-name: >-
   APPS_TO_DEPLOY=()
   if [[ ${{ github.event.inputs.host }} == "true" ]]; then APPS_TO_DEPLOY+=('host'); fi 
   if [[ ${{ github.event.inputs.settings }} == "true" ]]; then APPS_TO_DEPLOY+=('settings'); fi 
