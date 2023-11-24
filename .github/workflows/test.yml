@@ -1,6 +1,6 @@
 name: Deploy to eai-dev
 run-name: >-
-  printf 'Deploying: %s %s to %s' "host" "settings" "${{ inputs.k8s_namespace }}"
+  ${{ printf 'Deploying: %s %s to %s' "host" "settings" "eai" }}
 
 on:
   workflow_dispatch:
