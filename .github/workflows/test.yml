@@ -1,18 +1,62 @@
-name: integration-test
+name: Deploy to eai-dev
+run-name: |
+  APPS_TO_DEPLOY=()
+  if [[ ${{ github.event.inputs.host }} == "true" ]]; then APPS_TO_DEPLOY+=('host'); fi 
+  if [[ ${{ github.event.inputs.settings }} == "true" ]]; then APPS_TO_DEPLOY+=('settings'); fi 
+  if [[ ${{ github.event.inputs.journey }} == "true" ]]; then APPS_TO_DEPLOY+=('journey'); fi 
+  if [[ ${{ github.event.inputs.search }} == "true" ]]; then APPS_TO_DEPLOY+=('search'); fi 
+  if [[ ${{ github.event.inputs.stats }} == "true" ]]; then APPS_TO_DEPLOY+=('stats'); fi 
+  if [[ ${{ github.event.inputs.funnel }} == "true" ]]; then APPS_TO_DEPLOY+=('funnel'); fi 
+  "Deploying ${APPS_TO_DEPLOY[@]}) to ${{ inputs.k8s_namespace }}"
 
 on:
-  issue_comment:
-    types: [created]
+  workflow_dispatch:
+    inputs:
+      k8s_namespace:
+        type: choice
+        required: true
+        description: "k8s namespace to update"
+        options:
+          - eai-dev-apark
+          - eai-dev-blackjack
+          - eai-dev-client-announcement
+          - eai-dev-design
+          - eai-dev-fixers
+          - eai-dev-kaizen
+          - eai-dev-infra-check
+          - dev-eks-eai
+          - dev-eks-eai-demo
+      host:
+        description: "host"
+        required: false
+        type: boolean
+      settings:
+        description: "settings"
+        required: false
+        type: boolean
+      journey:
+        description: "journey"
+        required: false
+        type: boolean
+      search:
+        description: "search"
+        required: false
+        type: boolean
+      stats:
+        description: "stats"
+        required: false
+        type: boolean
+      funnel:
+        description: "funnel"
+        required: false
+        type: boolean
 
 env:
-  COMMENT: ${{ github.event.comment.body }}
+  S3_BUCKET: usergram-front-v3-${{ github.event.inputs.k8s_namespace }}
+  APP_TO_DEPLOY: ${{ github.event.inputs.app_to_deploy }}
 
 jobs:
   test:
-    if: ${{ github.event.issue.pull_request && (contains(github.event.comment.body, '/it') || contains(github.event.comment.body, '/integration-test')) }}
-    runs-on: ubuntu-22.04
-    env:
-      SHOULD_RECORD: ${{ contains(github.event.comment.body, 'record') }}
+    runs-on: ubuntu-latest
     steps:
-      - run: echo $COMMENT
-      - run: echo "should record $SHOULD_RECORD"
+      - run: echo "test"
