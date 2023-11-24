@@ -1,6 +1,6 @@
 name: Deploy to eai-dev
 run-name: >-
-  ${{ format('My Regression tests: {0}', inputs.k8s_namespace) }}
+  ${{ format('Deploy to {0}: {1}', inputs.k8s_namespace, inputs.host) }}
 
 on:
   workflow_dispatch:
