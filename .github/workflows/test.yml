@@ -1,6 +1,10 @@
 name: Deploy to eai-dev
 run-name: >-
-  ${{ printf 'Deploying: %s %s to %s' "host" "settings" "eai" }}
+  ${{ github.event.repository.name == 'ci-systems'
+    && format('My Regression tests: drv:{0} + ci-systems:{1}',
+              inputs.my_version,
+              github.head_ref || github.ref_name)
+    || format('My Regression tests: {0}', inputs.k8s_namespace) }}
 
 on:
   workflow_dispatch:
