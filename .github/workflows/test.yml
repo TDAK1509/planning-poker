@@ -1,13 +1,6 @@
 name: Deploy to eai-dev
 run-name: >-
-  APPS_TO_DEPLOY=()
-  if [[ ${{ github.event.inputs.host }} == "true" ]]; then APPS_TO_DEPLOY+=('host'); fi 
-  if [[ ${{ github.event.inputs.settings }} == "true" ]]; then APPS_TO_DEPLOY+=('settings'); fi 
-  if [[ ${{ github.event.inputs.journey }} == "true" ]]; then APPS_TO_DEPLOY+=('journey'); fi 
-  if [[ ${{ github.event.inputs.search }} == "true" ]]; then APPS_TO_DEPLOY+=('search'); fi 
-  if [[ ${{ github.event.inputs.stats }} == "true" ]]; then APPS_TO_DEPLOY+=('stats'); fi 
-  if [[ ${{ github.event.inputs.funnel }} == "true" ]]; then APPS_TO_DEPLOY+=('funnel'); fi 
-  "Deploying ${APPS_TO_DEPLOY[@]}) to ${{ inputs.k8s_namespace }}"
+  ${{ format("Deploying {0}, {1}, {2} to ${inputs.k8s_namespace}", 'host', 'settings') }}
 
 on:
   workflow_dispatch:
