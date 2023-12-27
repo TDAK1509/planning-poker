@@ -31,11 +31,11 @@ jobs:
     needs: get_docker_repository_refs
     runs-on: ubuntu-22.04
     env:
-      USERGRAM_DOCKER_REF: ${{ steps.get_docker_repository_refs.outputs.usergram_docker_ref }}
-      USER_APP_SERVER_SIDE_REF: ${{ steps.get_docker_repository_refs.outputs.user_app_server_side_ref }}
-      GRAM_AGENT_REF: ${{ steps.get_docker_repository_refs.outputs.gram_agent_ref }}
-      USERGRAM_E2E_REF: ${{ steps.get_docker_repository_refs.outputs.usergram_e2e_ref }}
-      USERGRAM_USER_JOURNEY_SERVICE_REF: ${{ steps.get_docker_repository_refs.outputs.usergram_user_journey_service_ref }}
+      USERGRAM_DOCKER_REF: ${{ needs.get_docker_repository_refs.outputs.usergram_docker_ref }}
+      USER_APP_SERVER_SIDE_REF: ${{ needs.get_docker_repository_refs.outputs.user_app_server_side_ref }}
+      GRAM_AGENT_REF: ${{ needs.get_docker_repository_refs.outputs.gram_agent_ref }}
+      USERGRAM_E2E_REF: ${{ needs.get_docker_repository_refs.outputs.usergram_e2e_ref }}
+      USERGRAM_USER_JOURNEY_SERVICE_REF: ${{ needs.get_docker_repository_refs.outputs.usergram_user_journey_service_ref }}
     steps:
       - name: Test
         run: |
