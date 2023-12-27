@@ -24,7 +24,7 @@ jobs:
 
           for arg in "${args[@]}"
           do
-            echo "$args" >> $GITHUB_OUTPUT
+            echo "$arg" >> $GITHUB_OUTPUT
           done
 
   test:
