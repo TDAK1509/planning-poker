@@ -5,27 +5,42 @@ on:
     types: [created]
 
 jobs:
-  handle_slash_command:
-    runs-on: ubuntu-latest
+  get_docker_repository_refs:
+    runs-on: ubuntu-22.04
+    outputs:
+      usergram_docker_ref: ${{ steps.get_args.outputs.usergram_docker_ref || 'master'}}
+      user_app_server_side_ref: ${{ steps.get_args.outputs.user_app_server_side_ref || 'master'}}
+      gram_agent_ref: ${{ steps.get_args.outputs.gram_agent_ref || 'master'}}
+      usergram_e2e_ref: ${{ steps.get_args.outputs.usergram_e2e_ref || 'master' }}
+      usergram_user_journey_service_ref: ${{ steps.get_args.outputs.usergram_user_journey_service_ref || 'main'}}
+    env:
+      COMMENT: ${{ github.event.comment.body }}
     steps:
-      - name: Getting PR number
-        id: extract_pr_number
-        shell: bash
+      - name: Get args from slash command
+        id: get_args
         run: |
-          pr_url="${{ github.event.issue.pull_request.url }}"
-          echo "pr_number=${pr_url##*/}" >> $GITHUB_OUTPUT
+          # Strip `/e2e ` from PR comment to get args, and convert to array
+          args=(${COMMENT:5})
 
-      - uses: xt0rted/pull-request-comment-branch@v2
-        id: comment-branch
+          for arg in "${args[@]}"
+          do
+            echo "$args" >> $GITHUB_OUTPUT
+          done
 
-      - uses: peter-evans/slash-command-dispatch@v3
-        with:
-          token: ${{ secrets.BEBIT_MACHINE_GITHUB_TOKEN }}
-          issue-type: pull-request
-          commands: |
-            integration-test
-          static-args: |
-            branch=${{ steps.comment-branch.outputs.head_ref }}
-            branch-sha=${{ steps.comment-branch.outputs.head_sha }}
-            pr-number=${{ steps.extract_pr_number.outputs.pr_number }}
-            comment-id=${{ github.event.comment.id }}
+  test:
+    needs: get_docker_repository_refs
+    runs-on: ubuntu-22.04
+    env:
+      USERGRAM_DOCKER_REF: ${{ steps.get_docker_repository_refs.outputs.usergram_docker_ref }}
+      USER_APP_SERVER_SIDE_REF: ${{ steps.get_docker_repository_refs.outputs.user_app_server_side_ref }}
+      GRAM_AGENT_REF: ${{ steps.get_docker_repository_refs.outputs.gram_agent_ref }}
+      USERGRAM_E2E_REF: ${{ steps.get_docker_repository_refs.outputs.usergram_e2e_ref }}
+      USERGRAM_USER_JOURNEY_SERVICE_REF: ${{ steps.get_docker_repository_refs.outputs.usergram_user_journey_service_ref }}
+    steps:
+      - name: Test
+        run: |
+          echo "usergram docker: $USERGRAM_DOCKER_REF"
+          echo "user app: $USER_APP_SERVER_SIDE_REF"
+          echo "gram agent: $GRAM_AGENT_REF"
+          echo "usergram e2e: $USERGRAM_E2E_REF"
+          echo "journey: $USERGRAM_USER_JOURNEY_SERVICE_REF"
