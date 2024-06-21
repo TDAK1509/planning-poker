@@ -39,4 +39,5 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "test"
+      - run: |
+          if [[ ${{ github.event.inputs.host }} == "true" || ${{ github.event.inputs.packages }} == "true" ]]; then echo 'host'; fi
