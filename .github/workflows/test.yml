@@ -30,10 +30,20 @@ on:
 
 env:
   S3_BUCKET: usergram-front-v3-${{ github.event.inputs.k8s_namespace }}
-  APPS: ${{ github.event.inputs.apps }}
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - run: echo $APPS
+      - name: Setup APPS_TO_DEPLOY
+        run: |
+          apps="${{ github.event.inputs.apps }}"
+          IFS=',' read -r -a APPS_TO_DEPLOY <<< "$apps"
+
+          # Array is not permitted in $GITHUB_ENV
+          echo "APPS_TO_DEPLOY=$(IFS=' '; echo "${APPS_TO_DEPLOY[@]}")" >> $GITHUB_ENV
+      - name: Deploy information
+        run: |
+          echo "- App to deploy: ${APPS_TO_DEPLOY}"
+          echo "- Dev environment: ${{ github.event.inputs.k8s_namespace }}"
+          echo "- Branch: ${GITHUB_REF#refs/heads/}"
