@@ -21,7 +21,9 @@ on:
           - dev-eks-eai-demo
       apps:
         description: >-
-          Apps to be deploy (e.g. search,packages). To see available apps:     echo packages && find apps -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | grep -v "_boilerplate"
+          Apps to be deploy (e.g. search,packages). 
+          To see available apps:
+          (echo packages && find apps -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | grep -v "_boilerplate")
         required: true
         default: ""
         type: string
