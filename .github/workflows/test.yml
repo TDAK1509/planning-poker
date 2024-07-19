@@ -1,5 +1,6 @@
 name: Deploy to eai-dev
-run-name: ${{ inputs.k8s_namespace }}: ${{ inputs.apps }}
+run-name: >-
+  ${{ inputs.k8s_namespace }}: ${{ inputs.apps }}
 
 on:
   workflow_dispatch:
