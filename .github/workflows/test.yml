@@ -20,7 +20,8 @@ on:
           - dev-eks-eai
           - dev-eks-eai-demo
       apps:
-        description: "Apps to be deploy (e.g. search,packages). Too see available apps: 'echo \"packages\" && find apps -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | grep -v \"_boilerplate\"'"
+        description: >-
+          Apps to be deploy (e.g. search,packages). Too see available apps: echo packages && find apps -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | grep -v "_boilerplate"
         required: false
         default: ""
         type: string
