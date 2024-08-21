@@ -1,0 +1,22 @@
+name: Test
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  test:
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, '/unittest') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy information
+        env:
+          COMMENT: ${{ github.event.comment.body }}
+        run: |
+          # Strip /unittest from the slash command to get list of apps
+          apps=(${COMMENT:10})
+
+          for app in "${apps[@]}"
+          do
+            echo "$app"
+          done
