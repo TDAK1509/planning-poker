@@ -25,6 +25,8 @@ jobs:
             apps=(${COMMENT:4})
           fi
 
+          echo $apps
+
           should_build_pkgs=()
 
           for app in "${apps[@]}"
