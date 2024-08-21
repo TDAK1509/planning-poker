@@ -26,7 +26,7 @@ jobs:
           # echo 'apps=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
           # echo 'apps=$apps_json' >> "$GITHUB_OUTPUT"
           echo 'apps=["red", "green", "blue"]'
-          echo 'apps="$apps_json"'
+          echo "apps=$apps_json"
 
   # build:
   #   needs: read_comment
