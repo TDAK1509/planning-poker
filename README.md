@@ -1,4 +1,4 @@
-## LOCAL DEVELOPMENT
+## LOCAL DEVELOPMENTS
 
 ```
 $ npm i
