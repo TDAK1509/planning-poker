@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       apps: ${{ steps.set-apps.outputs.apps }}
-      should_build_pkgs: ${{ steps.set-apps.outputs.should_build_pkgs }}
+      # should_build_pkgs: ${{ steps.set-apps.outputs.should_build_pkgs }}
     steps:
       - name: Deploy information
         id: set-apps
@@ -25,23 +25,22 @@ jobs:
             apps=(${COMMENT:4})
           fi
 
-          echo $apps
+          # should_build_pkgs=()
 
-          should_build_pkgs=()
-
-          for app in "${apps[@]}"
-          do
-            if [[ "$app" == "api" || "$app" == "auth" || "$app" == "global-settings" || "$app" == "util" ]]; then
-              should_build_pkgs+=(false)
-            else
-              should_build_pkgs+=(true)
-            fi
-          done
+          # for app in "${apps[@]}"
+          # do
+          #   if [[ "$app" == "api" || "$app" == "auth" || "$app" == "global-settings" || "$app" == "util" ]]; then
+          #     should_build_pkgs+=(false)
+          #   else
+          #     should_build_pkgs+=(true)
+          #   fi
+          # done
 
           apps_json=$(printf '%s\n' "${apps[@]}" | jq -R . | jq -s .)
-          should_build_pkgs_json=$(printf '%s\n' "${should_build_pkgs[@]}" | jq -R . | jq -s .)
+          echo $apps_json
+          # should_build_pkgs_json=$(printf '%s\n' "${should_build_pkgs[@]}" | jq -R . | jq -s .)
           echo "apps=$apps_json" >> $GITHUB_OUTPUT
-          echo "should_build_pkgs=$should_build_pkgs_json" >> $GITHUB_OUTPUT
+          # echo "should_build_pkgs=$should_build_pkgs_json" >> $GITHUB_OUTPUT
 
   build:
     needs: read_comment
@@ -49,10 +48,10 @@ jobs:
     strategy:
       matrix:
         app: ${{ fromJson(needs.read_comment.outputs.apps) }}
-        should_build_pkgs: ${{ fromJson(needs.read_comment.outputs.should_build_pkgs) }}
+        # should_build_pkgs: ${{ fromJson(needs.read_comment.outputs.should_build_pkgs) }}
 
     steps:
       - name: Display the current app and build setting
         run: |
           echo "App: ${{ matrix.app }}"
-          echo "Should Build Packages: ${{ matrix.should_build_pkgs }}"
+          # echo "Should Build Packages: ${{ matrix.should_build_pkgs }}"
