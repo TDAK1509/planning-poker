@@ -18,12 +18,14 @@ jobs:
         env:
           COMMENT: ${{ github.event.comment.body }}
         run: |
-          if [[ "$COMMENT" == "/ut" ]]; then
-            apps=$(find src -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
-          else
-            # Strip /ut from the slash command to get list of apps
-            apps=(${COMMENT:4})
-          fi
+          # if [[ "$COMMENT" == "/ut" ]]; then
+          #   apps=$(find src -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+          # else
+          #   # Strip /ut from the slash command to get list of apps
+          #   apps=(${COMMENT:4})
+          # fi
+
+          apps=$(find src -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
 
           # should_build_pkgs=()
 
