@@ -12,6 +12,7 @@ jobs:
       apps: ${{ steps.set-apps.outputs.apps }}
       # should_build_pkgs: ${{ steps.set-apps.outputs.should_build_pkgs }}
     steps:
+      - uses: actions/checkout@v4
       - name: Deploy information
         id: set-apps
         shell: bash
