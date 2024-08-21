@@ -29,7 +29,7 @@ jobs:
 
           for app in "${apps[@]}"
           do
-            if [[ "$app" == "api" || "$app" == "auth" || "$app" == "global-settings" || "$app" == "util"]]; then
+            if [[ "$app" == "api" || "$app" == "auth" || "$app" == "global-settings" || "$app" == "util" ]]; then
               should_build_pkgs+=(false)
             else
               should_build_pkgs+=(true)
