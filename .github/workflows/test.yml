@@ -27,6 +27,7 @@ jobs:
           # fi
 
           apps=$(find src -mindepth 1 -maxdepth 1 -type d -exec basename {} \;)
+          apps_array=($apps)
 
           # should_build_pkgs=()
 
@@ -39,7 +40,7 @@ jobs:
           #   fi
           # done
 
-          apps_json=$(echo "$apps" | jq -R . | jq -s .)
+          apps_json=$(printf '%s\n' "${apps_array[@]}" | jq -R . | jq -s .)
           echo $apps_json
           # should_build_pkgs_json=$(printf '%s\n' "${should_build_pkgs[@]}" | jq -R . | jq -s .)
           echo "apps=$apps_json" >> $GITHUB_OUTPUT
