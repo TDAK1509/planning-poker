@@ -40,11 +40,11 @@ jobs:
             apps_separated_by_comma+="$app,"
           done
 
+          apps_json=$(echo "${apps_separated_by_comma%?}" | awk -F',' '{print "[\"" $1 "\"," $2 "]"}' | jq .)
+
           # %? to remove trailing comma
-          apps_json=$(echo "${apps_separated_by_comma%?}" | jq -R . | jq -s .)
-          echo $apps_json
-          # should_build_pkgs_json=$(printf '%s\n' "${should_build_pkgs[@]}" | jq -R . | jq -s .)
           echo "apps=$apps_json" >> $GITHUB_OUTPUT
+          # should_build_pkgs_json=$(printf '%s\n' "${should_build_pkgs[@]}" | jq -R . | jq -s .)
           # echo "should_build_pkgs=$should_build_pkgs_json" >> $GITHUB_OUTPUT
 
   build:
