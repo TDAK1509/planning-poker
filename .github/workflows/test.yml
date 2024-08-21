@@ -23,8 +23,8 @@ jobs:
           apps_json=$(printf '%s\n' "${apps[@]}" | jq -R . | jq -s .)
           echo $apps_json
           # echo "apps=$apps_json" >> $GITHUB_OUTPUT
-          echo 'apps=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
-          # echo 'should_build_pkgs=$apps_json' >> "$GITHUB_OUTPUT"
+          # echo 'apps=["red", "green", "blue"]' >> "$GITHUB_OUTPUT"
+          echo 'apps=$apps_json' >> "$GITHUB_OUTPUT"
 
   build:
     needs: read_comment
