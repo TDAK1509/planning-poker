@@ -21,6 +21,9 @@ jobs:
         run: |
           apps="${COMMENT:4}"
           apps_json=$(echo "$apps" | tr ' ' '\n' | jq -R . | jq -s .)
+          echo $apps
+          echo $apps_json
+          echo "apps=$apps_json"
           echo "apps=$apps_json" >> $GITHUB_OUTPUT
 
   build:
