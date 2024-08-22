@@ -1,34 +1,38 @@
 name: Test
 
 on:
-  issue_comment:
-    types: [created]
+  # issue_comment:
+  #   types: [created]
+  pull_request:
 
 jobs:
   read_comment:
-    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, '/ut') }}
+    # if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, '/ut') }}
     runs-on: ubuntu-latest
     outputs:
-      apps: ${{ steps.set-apps.outputs.apps }}
+      apps: ${{ steps.set-matrix.outputs.matrix }}
       # should_build_pkgs: ${{ steps.set-apps.outputs.should_build_pkgs }}
     steps:
       - uses: actions/checkout@v4
       - name: Deploy information
-        id: set-apps
+        id: set-matrix
         shell: bash
         env:
-          COMMENT: ${{ github.event.comment.body }}
+          # COMMENT: ${{ github.event.comment.body }}
+          COMMENT: "/ut search host funnel"
         run: |
-          apps_string="${COMMENT:4}"
-          apps_array_string=$(echo "$apps_string" | sed 's/ /, /g' | sed 's/^/[ /' | sed 's/$/ ]/')
-          echo "apps=$apps_array_string" >> $GITHUB_OUTPUT
+          # apps_string="${COMMENT:4}"
+          # apps_array_string=$(echo "$apps_string" | sed 's/ /, /g' | sed 's/^/[ /' | sed 's/$/ ]/')
+          # echo "apps=$apps_array_string" >> $GITHUB_OUTPUT
+
+          echo "matrix={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
 
   build:
     needs: read_comment
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        app: ${{ needs.read_comment.outputs.apps }}
+        matrix: ${{ needs.read_comment.outputs.matrix }}
         # should_build_pkgs: ${{ fromJson(needs.read_comment.outputs.should_build_pkgs) }}
 
     steps:
