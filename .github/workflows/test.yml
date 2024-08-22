@@ -26,7 +26,7 @@ jobs:
           # echo "apps=$apps_array_string" >> $GITHUB_OUTPUT
 
           # echo "matrix={\"workspace\":[{\"search\",\"host\"]}" >> $GITHUB_OUTPUT
-          echo "matrix={\"include\":[{\"workspace\":\"search\"},{\"workspace\":\"host\"}]}"  >> $GITHUB_OUTPUT
+          echo "matrix={\"include\":[{\"workspace\":\"search\",\"should_build_pkgs\":true},{\"workspace\":\"host\",\"should_build_pkgs\":false}]}"  >> $GITHUB_OUTPUT
   build:
     needs: read_comment
     runs-on: ubuntu-latest
@@ -36,5 +36,5 @@ jobs:
     steps:
       - name: Display the current app and build setting
         run: |
-          echo "App: ${{ matrix.app }}"
-          # echo "Should Build Packages: ${{ matrix.should_build_pkgs }}"
+          echo "App: ${{ matrix.workspace }}"
+          echo "Should Build Packages: ${{ matrix.should_build_pkgs }}"
