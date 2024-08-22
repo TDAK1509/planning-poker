@@ -10,8 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
+      pr_branch: ${{ steps.comment-branch.outputs.head_ref }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Add action link
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          comment-id: ${{ github.event.comment.id }}
+          reactions: |
+            shipit
+
+      - name: Get PR branch
+        uses: xt0rted/pull-request-comment-branch@v2
+        id: comment-branch
+
       - name: Get apps
         id: get-apps
         shell: bash
@@ -54,6 +65,9 @@ jobs:
   build:
     needs: read_comment
     runs-on: ubuntu-latest
+    concurrency:
+      group: ${{ github.workflow }}-${{ needs.read_comment.outputs.pr_branch }}-${{ matrix.containers }}
+      cancel-in-progress: true
     strategy:
       matrix: ${{ fromJSON(needs.read_comment.outputs.matrix) }}
 
@@ -62,3 +76,4 @@ jobs:
         run: |
           echo "App: ${{ matrix.workspace }}"
           echo "Should Build Packages: ${{ matrix.should_build_pkgs }}"
+          echo "PR: ${{ needs.read_comment.outputs.pr_branch }}"
