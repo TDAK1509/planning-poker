@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        matrix: ${{ fromJson(needs.read_comment.outputs.matrix) }}
+        matrix: ${{ fromJSON(needs.read_comment.outputs.matrix) }}
         # should_build_pkgs: ${{ fromJson(needs.read_comment.outputs.should_build_pkgs) }}
 
     steps:
