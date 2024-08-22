@@ -10,7 +10,7 @@ jobs:
     # if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, '/ut') }}
     runs-on: ubuntu-latest
     outputs:
-      apps: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
       # should_build_pkgs: ${{ steps.set-apps.outputs.should_build_pkgs }}
     steps:
       - uses: actions/checkout@v4
