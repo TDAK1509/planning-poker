@@ -14,7 +14,7 @@ jobs:
       # should_build_pkgs: ${{ steps.set-apps.outputs.should_build_pkgs }}
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy information
+      - name: Prepare matrix
         id: set-matrix
         shell: bash
         env:
@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        matrix: ${{ needs.read_comment.outputs.matrix }}
+        matrix: ${{ fromJson(needs.read_comment.outputs.matrix) }}
         # should_build_pkgs: ${{ fromJson(needs.read_comment.outputs.should_build_pkgs) }}
 
     steps:
