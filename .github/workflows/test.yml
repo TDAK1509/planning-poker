@@ -31,9 +31,7 @@ jobs:
     needs: read_comment
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        matrix: ${{ fromJSON(needs.read_comment.outputs.matrix) }}
-        # should_build_pkgs: ${{ fromJson(needs.read_comment.outputs.should_build_pkgs) }}
+      matrix: ${{ fromJSON(needs.read_comment.outputs.matrix) }}
 
     steps:
       - name: Display the current app and build setting
