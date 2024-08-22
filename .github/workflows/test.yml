@@ -35,13 +35,12 @@ jobs:
         shell: bash
         run: |
           apps_as_string=${{ steps.get-apps.outputs.apps_as_string }}
-          echo $apps_as_string
 
           # Initialize the JSON array
           matrix_json="{\"include\":["
 
           # Extract the apps from the input string
-          for workspace in $(echo $apps_as_string | cut -d ' ' -f 2-); do
+          for workspace in $(echo $apps_as_string | cut -d ' ' -f 1-); do
             if [ "$workspace" = "host" ]; then
               should_build_pkgs=true
             else
@@ -54,7 +53,6 @@ jobs:
           matrix_json=${matrix_json%,}
           matrix_json+="]}"
 
-          echo "matrix=$matrix_json"
           echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
   build:
     needs: read_comment
