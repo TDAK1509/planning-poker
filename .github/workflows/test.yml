@@ -25,8 +25,8 @@ jobs:
           # apps_array_string=$(echo "$apps_string" | sed 's/ /, /g' | sed 's/^/[ /' | sed 's/$/ ]/')
           # echo "apps=$apps_array_string" >> $GITHUB_OUTPUT
 
-          echo "matrix={\"workspace\":[{\"search\",\"host\"]}" >> $GITHUB_OUTPUT
-
+          # echo "matrix={\"workspace\":[{\"search\",\"host\"]}" >> $GITHUB_OUTPUT
+          echo "matrix={\"include\":[{\"workspace\":[{\"search\",\"host\"]}]}"  >> $GITHUB_OUTPUT
   build:
     needs: read_comment
     runs-on: ubuntu-latest
