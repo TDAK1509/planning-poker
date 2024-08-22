@@ -53,10 +53,7 @@ jobs:
           matrix_json=${matrix_json%,}
           matrix_json+="]}"
 
-          # Escape the JSON string
-          escaped_matrix_json=$(echo $matrix_json | jq -Rr @matrix_json)
-
-          echo "matrix=$escaped_matrix_json" >> $GITHUB_OUTPUT
+          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
   build:
     needs: read_comment
     runs-on: ubuntu-latest
