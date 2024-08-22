@@ -1,25 +1,22 @@
 name: Test
 
 on:
-  # issue_comment:
-  #   types: [created]
-  pull_request:
+  issue_comment:
+    types: [created]
 
 jobs:
   read_comment:
-    # if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, '/ut') }}
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, '/ut') }}
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
-      # should_build_pkgs: ${{ steps.set-apps.outputs.should_build_pkgs }}
     steps:
       - uses: actions/checkout@v4
       - name: Get apps
         id: get-apps
         shell: bash
         env:
-          # COMMENT: ${{ github.event.comment.body }}
-          COMMENT: "/ut search host funnel"
+          COMMENT: ${{ github.event.comment.body }}
         run: |
           if [[ $COMMENT == "/ut" ]]; then
             all_apps=$(find src -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | tr '\n' ' ')
@@ -41,10 +38,10 @@ jobs:
 
           # Extract the apps from the input string
           for workspace in $(echo $apps_as_string | cut -d ' ' -f 1-); do
-            if [ "$workspace" = "host" ]; then
-              should_build_pkgs=true
-            else
+            if [ "$workspace" = "api" || "$workspace" = "auth" || "$workspace" = "global-settings" || "$workspace" = "utils" ]; then
               should_build_pkgs=false
+            else
+              should_build_pkgs=true
             fi
             matrix_json+="{\"workspace\":\"$workspace\",\"should_build_pkgs\":$should_build_pkgs},"
           done
