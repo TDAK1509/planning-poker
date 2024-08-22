@@ -38,7 +38,7 @@ jobs:
 
           # Extract the apps from the input string
           for workspace in $(echo $apps_as_string | cut -d ' ' -f 1-); do
-            if [ "$workspace" = "api" || "$workspace" = "auth" || "$workspace" = "global-settings" || "$workspace" = "utils" ]; then
+            if [ "$workspace" = "api" ] || [ "$workspace" = "auth" ] || [ "$workspace" = "global-settings" ] || [ "$workspace" = "utils" ]; then
               should_build_pkgs=false
             else
               should_build_pkgs=true
