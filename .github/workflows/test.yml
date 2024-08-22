@@ -28,7 +28,7 @@ jobs:
             apps_as_string="${COMMENT:4}"
           fi
 
-          echo "apps_as_string=$apps_as_string" >> $GITHUB_OUTPUT
+          echo "apps_as_string=\"$apps_as_string\"" >> $GITHUB_OUTPUT
 
       - name: Prepare matrix
         id: set-matrix
