@@ -34,7 +34,7 @@ jobs:
         id: set-matrix
         shell: bash
         run: |
-          apps_as_string=${{ steps.get-apps.apps_as_string }}
+          apps_as_string=${{ steps.get-apps.outputs.apps_as_string }}
           echo $apps_as_string
 
           # Initialize the JSON array
