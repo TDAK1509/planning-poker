@@ -66,7 +66,7 @@ jobs:
     needs: read_comment
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ github.workflow }}-${{ needs.read_comment.outputs.pr_branch }}-${{ matrix.containers }}
+      group: ${{ github.workflow }}-${{ needs.read_comment.outputs.pr_branch }}-${{ matrix.workspace }}
       cancel-in-progress: true
     strategy:
       matrix: ${{ fromJSON(needs.read_comment.outputs.matrix) }}
