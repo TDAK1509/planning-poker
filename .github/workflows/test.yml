@@ -35,6 +35,7 @@ jobs:
         shell: bash
         run: |
           apps_as_string=${{ steps.get-apps.apps_as_string }}
+          echo $apps_as_string
 
           # Initialize the JSON array
           matrix_json="{\"include\":["
@@ -53,6 +54,7 @@ jobs:
           matrix_json=${matrix_json%,}
           matrix_json+="]}"
 
+          echo "matrix=$matrix_json"
           echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
   build:
     needs: read_comment
