@@ -5,7 +5,7 @@ on:
 
 jobs:
   unit-test-report:
-    name: Lint and unit test report
+    name: Lint and unit test reportt
     runs-on: ubuntu-22.04
     steps:
       - name: Set latest commit status
