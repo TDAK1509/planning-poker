@@ -10,9 +10,9 @@ jobs:
     steps:
       - name: Set latest commit status
         env:
-          SUCCESS: ${{ ('success' == "success" || 'a' == "skipped") && "success" || "failure" }}
-          SKIPPED: ${{ ('a' == "success" || 'skipped' == "skipped") && "success" || "failure" }}
-          FAILURE: ${{ ('b' == "success" || 'a' == "skipped") && "success" || "failure" }}
+          SUCCESS: ${{ ("success" == "success" || "a" == "skipped") && "success" || "failure" }}
+          SKIPPED: ${{ ("a" == "success" || "skipped" == "skipped") && "success" || "failure" }}
+          FAILURE: ${{ ("b" == "success" || "a" == "skipped") && "success" || "failure" }}
         run: |
           echo $SUCCESS
           echo $SKIPPED
