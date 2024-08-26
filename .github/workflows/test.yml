@@ -1,79 +1,19 @@
 name: Test
 
 on:
-  issue_comment:
-    types: [created]
+  pull_request:
 
 jobs:
-  read_comment:
-    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, '/ut') }}
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-      pr_branch: ${{ steps.comment-branch.outputs.head_ref }}
+  unit-test-report:
+    name: Lint and unit test report
+    runs-on: ubuntu-22.04
     steps:
-      - name: Add action link
-        uses: peter-evans/create-or-update-comment@v4
-        with:
-          comment-id: ${{ github.event.comment.id }}
-          reactions: |
-            shipit
-
-      - name: Get PR branch
-        uses: xt0rted/pull-request-comment-branch@v2
-        id: comment-branch
-
-      - name: Get apps
-        id: get-apps
-        shell: bash
+      - name: Set latest commit status
         env:
-          COMMENT: ${{ github.event.comment.body }}
+          SUCCESS: ${{ ('success' == "success" || 'a' == "skipped") && "success" || "failure" }}
+          SKIPPED: ${{ ('a' == "success" || 'skipped' == "skipped") && "success" || "failure" }}
+          FAILURE: ${{ ('b' == "success" || 'a' == "skipped") && "success" || "failure" }}
         run: |
-          if [[ $COMMENT == "/ut" ]]; then
-            all_apps=$(find src -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | tr '\n' ' ')
-            apps_as_string=$all_apps
-          else
-            apps_as_string="${COMMENT:4}"
-          fi
-
-          echo "apps_as_string=\"$apps_as_string\"" >> $GITHUB_OUTPUT
-
-      - name: Prepare matrix
-        id: set-matrix
-        shell: bash
-        run: |
-          apps_as_string=${{ steps.get-apps.outputs.apps_as_string }}
-
-          # Initialize the JSON array
-          matrix_json="{\"include\":["
-
-          # Extract the apps from the input string
-          for workspace in $(echo $apps_as_string | cut -d ' ' -f 1-); do
-            if [ "$workspace" = "api" ] || [ "$workspace" = "auth" ] || [ "$workspace" = "global-settings" ] || [ "$workspace" = "utils" ]; then
-              should_build_pkgs=false
-            else
-              should_build_pkgs=true
-            fi
-            matrix_json+="{\"workspace\":\"$workspace\",\"should_build_pkgs\":$should_build_pkgs},"
-          done
-
-          # Remove the trailing comma and close the JSON array
-          matrix_json=${matrix_json%,}
-          matrix_json+="]}"
-
-          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
-  build:
-    needs: read_comment
-    runs-on: ubuntu-latest
-    concurrency:
-      group: ${{ github.workflow }}-${{ needs.read_comment.outputs.pr_branch }}-${{ matrix.workspace }}
-      cancel-in-progress: true
-    strategy:
-      matrix: ${{ fromJSON(needs.read_comment.outputs.matrix) }}
-
-    steps:
-      - name: Display the current app and build setting
-        run: |
-          echo "App: ${{ matrix.workspace }}"
-          echo "Should Build Packages: ${{ matrix.should_build_pkgs }}"
-          echo "PR: ${{ needs.read_comment.outputs.pr_branch }}"
+          echo $SUCCESS
+          echo $SKIPPED
+          echo $FAILURE
