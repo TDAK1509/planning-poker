@@ -5,7 +5,7 @@ $ npm i
 $ npm start
 ```
 
-## DEPLOY
+## DEPLOYY
 
 ```
 $ heroku login
