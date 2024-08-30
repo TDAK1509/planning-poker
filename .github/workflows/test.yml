@@ -1,19 +1,20 @@
 name: Test
 
 on:
-  pull_request:
+  issue_comment:
+    types: [created]
 
 jobs:
-  unit-test-report:
-    name: Lint and unit test report
-    runs-on: ubuntu-22.04
+  read_comment:
+    if: ${{ github.event.issue.pull_request && startsWith(github.event.comment.body, '/ut') }}
+    runs-on: ubuntu-latest
+    outputs:
+      pr_base_sha: ${{ steps.comment-branch.outputs.base_sha }}
+      pr_head_sha: ${{ steps.comment-branch.outputs.head_sha }}
     steps:
-      - name: Set latest commit status
-        env:
-          SUCCESS: ${{ ('success' == "success" || 'a' == "skipped") && "success" || "failure" }}
-          SKIPPED: ${{ ('a' == "success" || 'skipped' == "skipped") && "success" || "failure" }}
-          FAILURE: ${{ ('b' == "success" || 'a' == "skipped") && "success" || "failure" }}
-        run: |
-          echo $SUCCESS
-          echo $SKIPPED
-          echo $FAILURE
+      - name: Get PR branch
+        uses: xt0rted/pull-request-comment-branch@v2
+        id: comment-branch
+      - run: |
+          echo ${{ steps.comment-branch.outputs.base_sha }}
+          echo ${{ steps.comment-branch.outputs.head_sha }}
